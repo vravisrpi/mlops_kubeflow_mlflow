@@ -1,0 +1,1000 @@
+ 1310  clear
+ 1311  ls
+ 1312  cd jenkins/
+ 1313  ls
+ 1314  cd build/
+ 1315  ls
+ 1316  cd dev/
+ 1317  ls
+ 1318  vi build-dev.sh 
+ 1319  cd ../
+ 1320  ls
+ 1321  cd ../
+ 1322  ls
+ 1323  cd trigger/
+ 1324  ls
+ 1325  cd dev/
+ 1326  ls
+ 1327  vi aiap-ref_module-dev.cmd
+ 1328  cd ../
+ 1329  ls
+ 1330  cd ../
+ 1331  lls
+ 1332  clear
+ 1333  sudo docker images
+ 1334  history | less
+ 1335  df -h
+ 1336  netstat -tnlp
+ 1337  cd
+ 1338  ls
+ 1339  cd video-inteligence/
+ 1340  ls
+ 1341  cd aiap_prototype/
+ 1342  ls
+ 1343  cd
+ 1344  ls
+ 1345  cd misc
+ 1346  clear
+ 1347  ls
+ 1348  cd
+ 1349  ls
+ 1350  cd fraud-blob/
+ 1351  ls
+ 1352  cd simulation-data/
+ 1353  ls
+ 1354  cd simulation-data/
+ 1355  ls
+ 1356  cd
+ 1357  ls
+ 1358  sudo docker ps
+ 1359  sudo docker stop 90e138ede4c9
+ 1360  python3 -m http.server 8400
+ 1361  ls
+ 1362  clear
+ 1363  sl
+ 1364  ls
+ 1365  sudo docker ps
+ 1366  curl localhost:8300
+ 1367  curl localhost:5000
+ 1368  clear
+ 1369  ls
+ 1370  sudo docker images
+ 1371  cd backend_process/
+ 1372  ls
+ 1373  cd aiap_prototype/
+ 1374  ls
+ 1375  cd backoffice_process/
+ 1376  ls
+ 1377  vi Dockerfile 
+ 1378  cd
+ 1379  ls
+ 1380  cd state_street
+ 1381  ls
+ 1382  cd aiap_prototype/
+ 1383  ls
+ 1384  cd state_street_ocr/
+ 1385  ls
+ 1386  cd ocr_bounding
+ 1387  ls
+ 1388  vi start.sh 
+ 1389  sudo docker images
+ 1390  sudo docker run -it ocr-bb-dev bash
+ 1391  sudo docker run -itd -p 8200:8014 ocr-bb-dev
+ 1392  sudo docker ps
+ 1393  sudo docker stop f35bd
+ 1394  sudo docker run -itd -p 8200:8014 ocr-bb-dev
+ 1395  curl localhost:8200
+ 1396  sudo docker ps
+ 1397  sudo docker logs 3c67
+ 1398  sudo docker logs -f 3c67
+ 1399  sudo docker ps
+ 1400  sudo docker exec -it 3c67 bash
+ 1401  sudo docker images
+ 1402  clear
+ 1403  ls
+ 1404  cd video-inteligence/
+ 1405  ls
+ 1406  cd aiap_prototype/
+ 1407  ls
+ 1408  cd
+ 1409  ls
+ 1410  clear
+ 1411  ls
+ 1412  clear
+ 1413  ls
+ 1414  unzip IDP-Upload-API.zip 
+ 1415  clear
+ 1416  ls
+ 1417  cd IDP-Upload-API/
+ 1418  clear
+ 1419  ls
+ 1420  sudo docker build -t upload_api .
+ 1421  df -h
+ 1422  clear
+ 1423  curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+ 1424  sudo install minikube-linux-amd64 /usr/local/bin/minikube
+ 1425  ls
+ 1426  sudo install minikube-linux-amd64 /usr/local/bin/minikube
+ 1427  minikube start
+ 1428  sudo apt install virtualbox virtualbox-ext-pack
+ 1429  wget https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+ 1430  sudo cp minikube-linux-amd64 /usr/local/bin/minikube
+ 1431  sudo chmod 755 /usr/local/bin/minikube
+ 1432  minikube version
+ 1433  curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
+ 1434  chmod +x ./kubectl
+ 1435  sudo mv ./kubectl /usr/local/bin/kubectl
+ 1436  kubectl version -o json
+ 1437  minikube start
+ 1438  kubectl cluster-info
+ 1439  kubectl get nodes
+ 1440  kubectl get pod
+ 1441  minikube status
+ 1442  minikube dashboard --url &
+ 1443  kubectl proxy --address=0.0.0.0 --accept-hosts='.*'
+ 1444  netstat -tnlp
+ 1445  minikube dashboard
+ 1446  minikube dashboard &
+ 1447  minikube dashboard 
+ 1448  minikube dashboard &
+ 1449  kubectl proxy --address=0.0.0.0 --accept-hosts='.*'
+ 1450  minikube dashboard --url
+ 1451  minikube dashboard --url &
+ 1452  kubectl proxy --address=0.0.0.0 --accept-hosts='.*'
+ 1453  netstat -tnlp
+ 1454  kubectl proxy --address=0.0.0.0 --accept-hosts='.*'
+ 1455  netstat -tnlp
+ 1456  curl localhost:2746
+ 1457  sudo shutdown -h now
+ 1458  netstat -tnlp
+ 1459  brew
+ 1460  sudo apt install linuxbrew-wrapper
+ 1461  brew version
+ 1462  brew
+ 1463  brew install argo
+ 1464  clear
+ 1465  kubectl create namespace argo
+ 1466  kubectl apply -n argo -f https://github.com/argoproj/argo-workflows/releases/download/v<<ARGO_WORKFLOWS_VERSION>>/install.yaml
+ 1467  kubectl apply -n argo -f https://github.com/argoproj/argo-workflows/releases/download/v0.22.13/install.yaml
+ 1468  kubectl apply -n argo -f https://github.com/argoproj/argo-workflows/releases/download/v3.4.5/install.yaml
+ 1469  kubectl patch deployment   argo-server   --namespace argo   --type='json'   -p='[{"op": "replace", "path": "/spec/template/spec/containers/0/args", "value": [
+ 1470    "server",
+ 1471    "--auth-mode=server"
+ 1472  ]}]'
+ 1473  kubectl -n argo port-forward deployment/argo-server 2746:2746
+ 1474  clear
+ 1475  kubectl -n argo port-forward deployment/argo-server 2746:2746
+ 1476  kubectl -n argo port-forward deployment/argo-server 8001:2746
+ 1477  kubectl -n argo port-forward deployment/argo-server  --address=0.0.0.0 8001:2746
+ 1478  kubectl -n argo port-forward deployment/argo-server  --address=0.0.0.0 2746:2746
+ 1479  ls
+ 1480  sudo docker ps
+ 1481  history | less
+ 1482  ls
+ 1483  history >> cmds_argo.txt
+ 1484  vi cmds_argo.txt 
+ 1485  minikube status
+ 1486  minikube start
+ 1487  minikube status
+ 1488  kubectl get pods
+ 1489  kubectl get pods -n argo
+ 1490  kubectl -n argo port-forward deployment/argo-server  --address=0.0.0.0 2746:2746
+ 1491  clear
+ 1492  ls
+ 1493  cd mkdir argo-wf
+ 1494  mkdir argo-wf
+ 1495  cd argo-wf/
+ 1496  ls
+ 1497  vi hello-wf.yaml
+ 1498  argo submit -n argo --watch hello-wf.yaml 
+ 1499  curl -sLO https://github.com/argoproj/argo-workflows/releases/download/v3.4.5/argo-linux-amd64.gz
+ 1500  gunzip argo-linux-amd64.gz
+ 1501  chmod +x argo-linux-amd64
+ 1502  mv ./argo-linux-amd64 /usr/local/bin/argo
+ 1503  sudo mv ./argo-linux-amd64 /usr/local/bin/argo
+ 1504  argo version
+ 1505  argo submit -n argo --watch hello-wf.yaml 
+ 1506  ls
+ 1507  vi hello-wf.yaml 
+ 1508  argo submit -n argo --watch hello-wf.yaml 
+ 1509  vi hello-wf.yaml 
+ 1510  argo submit -n argo --watch hello-wf.yaml 
+ 1511  ls
+ 1512  vi hello-wf.yaml 
+ 1513  argo submit -n argo --watch hello-wf.yaml 
+ 1514  sudo docker ps
+ 1515  argo submit -n argo --watch hello-wf.yaml 
+ 1516  ls
+ 1517  kubectl get nodes
+ 1518  kubectl get pods -n argo
+ 1519  kubectl get pods python-multistep-workflowp8xz9-python-print-3224659487
+ 1520  kubectl describe pods python-multistep-workflowp8xz9-python-print-3224659487
+ 1521  history | less
+ 1522  minikube status
+ 1523  history | less
+ 1524  minikube status
+ 1525  clear
+ 1526  kubectl get pods -n argo
+ 1527  clear
+ 1528  ls
+ 1529  cd argo-wf/
+ 1530  clear
+ 1531  ls
+ 1532  vi inp-git.yaml
+ 1533  argo submit -n argo --watch inp-git.yaml 
+ 1534  vi inp-git.yaml
+ 1535  ls /mnt/
+ 1536  sudo mkdir /mnt/data
+ 1537  vi inp-git.yaml
+ 1538  argo submit -n argo --watch inp-git.yaml 
+ 1539  vi inp-git.yaml
+ 1540  argo submit -n argo --watch inp-git.yaml 
+ 1541  ls
+ 1542  vi /mnt/data/
+ 1543  cd /mnt/data/
+ 1544  ls
+ 1545  kubectl get pods -n argo
+ 1546  kubectl get pods input-artifact-git-vpqvc
+ 1547  kubectl get logs --pods input-artifact-git-vpqvc
+ 1548  vi /mnt/data/
+ 1549  ls
+ 1550  cd
+ 1551  cd argo-wf/
+ 1552  ls
+ 1553  vi inp-git.yaml 
+ 1554  argo submit -n argo --watch inp-git.yaml 
+ 1555  ls -al /mnt/data/
+ 1556  date
+ 1557  ls -al /mnt/data/
+ 1558  ls -al /mnt/data/.
+ 1559  pwd
+ 1560  cd /mnt/
+ 1561  cd data/
+ 1562  ls
+ 1563  clear
+ 1564  ls -al
+ 1565  cd .
+ 1566  ls
+ 1567  cd ../
+ 1568  ls
+ 1569  cd data/
+ 1570  ls
+ 1571  cd
+ 1572  ls
+ 1573  cd argo-wf/
+ 1574  clear
+ 1575  ls
+ 1576  vi volume.yaml
+ 1577  history | less
+ 1578  argo submit -n argo --watch volume.yaml 
+ 1579  vi volume.yaml 
+ 1580  argo submit -n argo --watch volume.yaml 
+ 1581  ls
+ 1582  vi volume.yaml 
+ 1583  clear
+ 1584  ls
+ 1585  vi kubectl get volumes
+ 1586  kubectl get volumes
+ 1587  kubectl get volume
+ 1588  kubectl get pods
+ 1589  kubectl get volumes 
+ 1590  kubectl get volumes -n --al
+ 1591  kubectl get volumes -n --all
+ 1592  kubectl get volumes 
+ 1593  kubect --help
+ 1594  kubectl --help
+ 1595  kubectl get --help
+ 1596  :q
+ 1597  clear
+ 1598  kubectl get all --all-namespaces
+ 1599  kubectl get storageclass
+ 1600  kubectl exec storage ls /data
+ 1601  ls
+ 1602  vi ci.yaml
+ 1603  argo submit -n argo --watch ci.yaml 
+ 1604  vi ci.yaml
+ 1605  argo submit -n argo --watch ci.yaml 
+ 1606  ls
+ 1607  vi ci.yaml 
+ 1608  vi images.yaml
+ 1609  history | less
+ 1610  argo submit -n argo --watch images.yaml 
+ 1611  vi images.yaml 
+ 1612  sudo shutdown -h now
+ 1613  argo server status
+ 1614  argo server start
+ 1615  minikube status
+ 1616  minikube start
+ 1617  history| less
+ 1618  kubectl -n argo port-forward deployment/argo-server  --address=0.0.0.0 2746:2746 &
+ 1619  kubectl get pds
+ 1620  kubectl get pods -A
+ 1621  docker ps
+ 1622  sudo docker ps
+ 1623  history | less
+ 1624  minikube status
+ 1625  minikube start
+ 1626  kubectl get pods -A
+ 1627  history | less
+ 1628  ls
+ 1629  cd argo-wf/
+ 1630  ls
+ 1631  argo server status
+ 1632  clear
+ 1633  kubectl get pods
+ 1634  kubectl get pods -A
+ 1635  cd ../
+ 1636  ls
+ 1637  clear
+ 1638  ls
+ 1639  vi deloitte_output.txt.txt 
+ 1640  ls -al
+ 1641  vi nodesource_setup.sh
+ 1642  clear
+ 1643  conda create -n evidently python=3.9
+ 1644* 
+ 1645  pip install evidently
+ 1646  df -h
+ 1647  sudo docker ps
+ 1648  sudo docker images 
+ 1649  sudo docker rmi -f 28a4c88cdbbf 9ad63f85cf13 18dddf38
+ 1650  df -h
+ 1651  sudo shutdown -h now
+ 1652  history | less
+ 1653  minikube status
+ 1654  history | less
+ 1655  minikube start
+ 1656  kubectl get pods
+ 1657  kubectl get nodes
+ 1658  du 0-sh
+ 1659  du -sh
+ 1660  df -h
+ 1661  minikube start
+ 1662  kubectl --version
+ 1663  kubectl get nodes
+ 1664  minikube stop
+ 1665  minikube start
+ 1666  minikube --help
+ 1667* 
+ 1668  minikube start
+ 1669  kubectl version -o json | jq .serverVersion
+ 1670  kubectl version 
+ 1671  clear
+ 1672  ls
+ 1673  mkdir kf-setup
+ 1674  cd kf-setup/
+ 1675  ls
+ 1676  curl -O https://raw.githubusercontent.com/kubeflow/kubeflow/v0.2-branch/bootstrap/bootstrapper.yaml
+ 1677  kubectl create -f bootstrapper.yaml
+ 1678  sudo apt-get update && sudo apt-get install -y apt-transport-https
+ 1679  curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+ 1680  sudo touch /etc/apt/sources.list.d/kubernetes.list
+ 1681  echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a 
+ 1682  echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
+ 1683  sudo apt-get update
+ 1684  kubectl create -f bootstrapper.yaml
+ 1685* 
+ 1686  minikube start --cpus 2 --memory 8096 --disk-size=40g
+ 1687  clear
+ 1688  ls
+ 1689  rm -rf
+ 1690  history
+ 1691  clear
+ 1692  ls
+ 1693  cd misc/
+ 1694  curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+ 1695  az account set --subscription 590c8908-24b4-4889-b637-f626a9c260e5
+ 1696  az login
+ 1697  az account set --subscription 590c8908-24b4-4889-b637-f626a9c260e5
+ 1698  az aks get-credentials --resource-group aiap --name my-aks
+ 1699  # List all deployments in all namespaces
+ 1700  kubectl get deployments --all-namespaces=true
+ 1701  # List all deployments in a specific namespace
+ 1702  # Format :kubectl get deployments --namespace <namespace-name>
+ 1703  kubectl get deployments --namespace kube-system
+ 1704  wget https://github.com/kubeflow/kfctl/releases/download/v1.2.0/kfctl_v1.2.0-0-gbc038f9_linux.tar.gz
+ 1705  ls
+ 1706  tar -xvf kfctl_v1.2.0-0-gbc038f9_linux.tar.gz 
+ 1707  ls
+ 1708  pwd
+ 1709  export PATH=$PATH:"/home/aiap/misc/"
+ 1710  export KF_NAME=my-kubeflow
+ 1711  export BASE_DIR=/opt/
+ 1712  export KF_DIR=${BASE_DIR}/${KF_NAME}
+ 1713  mkdir -p ${KF_DIR}
+ 1714  sudo mkdir -p ${KF_DIR}
+ 1715  cd ${KF_DIR}
+ 1716  export CONFIG_URI="https://raw.githubusercontent.com/kubeflow/manifests/v1.2-branch/kfdef/kfctl_k8s_istio.v1.2.0.yaml"
+ 1717  kfctl apply -V -f ${CONFIG_URI}
+ 1718  sudo su
+ 1719  kubectl get namespaces
+ 1720  ls
+ 1721  kfctl apply -f kfctl_k8s_istio.v1.2.0.yaml 
+ 1722  ls
+ 1723  export CONFIG=./kfctl_k8s_istio.v1.2.0.yaml
+ 1724  kfctl apply -V --file=${CONFIG}
+ 1725  ls
+ 1726  chmod 777 kfctl_k8s_istio.v1.2.0.yaml 
+ 1727  sudo chmod 777 kfctl_k8s_istio.v1.2.0.yaml 
+ 1728  kfctl apply -V --file=${CONFIG}
+ 1729  ls
+ 1730  cd
+ 1731  ls
+ 1732  cd misc/
+ 1733  ls
+ 1734  mkdir kubeflow
+ 1735  pwd
+ 1736  ls
+ 1737  export BASE_DIR=/home/aiap/misc/kubeflow
+ 1738  export KF_DIR=${BASE_DIR}/${KF_NAME}
+ 1739  ls
+ 1740  export CONFIG_URI="https://raw.githubusercontent.com/kubeflow/manifests/v1.2-branch/kfdef/kfctl_k8s_istio.v1.2.0.yaml"
+ 1741  mkdir -p ${KF_DIR}
+ 1742  ls
+ 1743  ${KF_DIR}
+ 1744  cd ${KF_DIR}
+ 1745  ls
+ 1746  export CONFIG_URI="https://raw.githubusercontent.com/kubeflow/manifests/v1.2-branch/kfdef/kfctl_k8s_istio.v1.2.0.yaml"
+ 1747  kfctl apply -V -f ${CONFIG_URI}
+ 1748  kubectl get deployments --namespace kube-system
+ 1749  kubectl get deployments --namespace kubeflow
+ 1750  kubectl get deployments --namespace all
+ 1751  kubectl get deployments 
+ 1752  kubectl get deployments -n ALL
+ 1753  kubectl get namespace
+ 1754  kubectl get deployments -n kubeflow
+ 1755  ls
+ 1756  export CONFIG_URI="https://raw.githubusercontent.com/kubeflow/manifests/v1.2-branch/kfdef/kfctl_k8s_istio.v1.2.0.yaml"
+ 1757  kfctl apply -V -f ${CONFIG_URI}
+ 1758  ls
+ 1759  rm -rf kfctl_k8s_istio.v1.2.0.yaml 
+ 1760  export CONFIG_URI="https://raw.githubusercontent.com/kubeflow/manifests/v1.2-branch/kfdef/kfctl_k8s_istio.v1.2.0.yaml"
+ 1761  kfctl apply -V -f ${CONFIG_URI}
+ 1762  ls
+ 1763  rm -rf kustomize/
+ 1764  kfctl apply -V -f ${CONFIG_URI}
+ 1765  clear
+ 1766  az aks install-cli
+ 1767  sudo az aks install-cli
+ 1768  ks
+ 1769  clear
+ 1770  ls
+ 1771  rm -rf *
+ 1772  ls
+ 1773  git clone --recurse-submodules https://github.com/Azure/kubeflow-aks.git
+ 1774  ls
+ 1775  cd kubeflow-aks
+ 1776  ls
+ 1777  az ad signed-in-user show --query id --out tsv
+ 1778  SIGNEDINUSER=$(az ad signed-in-user show --query id --out tsv)
+ 1779  az aks get-credentials --resource-group aiap --name my-aks
+ 1780  kubelogin convert-kubeconfig -l azurecli
+ 1781  kubectl get nodes
+ 1782  curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash
+ 1783  ls
+ 1784  cd manifests/
+ 1785  ls
+ 1786  git checkout v1.6-branch
+ 1787  while ! kustomize build example | kubectl apply -f -; do echo "Retrying to apply resources"; sleep 10; done
+ 1788  ls
+ 1789  cd ../
+ 1790  ls
+ 1791  pwd
+ 1792  export PATH=$PATH:"/home/aiap/misc/kubeflow/my-kubeflow/kubeflow-aks"
+ 1793  while ! kustomize build example | kubectl apply -f -; do echo "Retrying to apply resources"; sleep 10; done
+ 1794  ls
+ 1795  kustomize 
+ 1796  cd manifests/
+ 1797  kustomize 
+ 1798  while ! kustomize build example | kubectl apply -f -; do echo "Retrying to apply resources"; sleep 10; done
+ 1799  kustomize edit fix
+ 1800  ls
+ 1801  cd ../
+ 1802  ls
+ 1803  kustomize edit fix
+ 1804  kubectl get deployments -n kubeflow
+ 1805  kubectl get pods -n cert-manager
+ 1806  kubectl get pods -n istio-system
+ 1807  kubectl get pods -n auth
+ 1808  kubectl get pods -n knative-eventing
+ 1809  kubectl get pods -n knative-serving
+ 1810  kubectl get pods -n kubeflow
+ 1811  kubectl get pods -n kubeflow-user-example-com
+ 1812  kubectl port-forward svc/istio-ingressgateway -n istio-system 8080:80
+ 1813  kubectl port-forward svc/istio-ingressgateway -n istio-system --address='0.0.0.0' 8080:80
+ 1814  kubectl port-forward svc/istio-ingressgateway -n istio-system 8080:80 --address='0.0.0.0'
+ 1815  curl localhost:8080
+ 1816  curl http://40.70.70.47:8080/
+ 1817  kubectl port-forward svc/istio-ingressgateway -n istio-system 8080:80 --address='0.0.0.0'
+ 1818  kubectl edit destinationrule -n kubeflow ml-pipeline
+ 1819  kubectl edit destinationrule -n kubeflow ml-pipeline-ui
+ 1820  kubectl port-forward svc/istio-ingressgateway -n istio-system 8080:80 --address='0.0.0.0'
+ 1821  nohup kubectl port-forward svc/istio-ingressgateway -n istio-system 8080:80 --address='0.0.0.0' &
+ 1822  kubectl get pods -n kubeflow
+ 1823  kubectl get nodes
+ 1824  netstat -tnlp
+ 1825  ls
+ 1826  clear
+ 1827  nohup kubectl port-forward svc/istio-ingressgateway -n istio-system 8080:80 --address='0.0.0.0' &
+ 1828  vi nohup.out 
+ 1829  kubectl get pods -n kubeflow
+ 1830  kubectl port-forward svc/istio-ingressgateway -n istio-system 8080:80 --address='0.0.0.0' 
+ 1831  kubectl get pods -n kubeflow
+ 1832  clear
+ 1833  kubectl get pods -n kubeflow
+ 1834  kubectl port-forward svc/istio-ingressgateway -n istio-system 8080:80 --address='0.0.0.0' 
+ 1835  kubectl get deployments -n kubeflow
+ 1836  kubectl port-forward svc/istio-ingressgateway -n istio-system 8080:80 --address='0.0.0.0' 
+ 1837  curl localhost:8080
+ 1838  clear
+ 1839  ls
+ 1840  cd mlops_demo_kubeflow/
+ 1841  ls
+ 1842  cd demo_mlops/
+ 1843  ls
+ 1844  cd demo_kf/
+ 1845  clear
+ 1846  ls
+ 1847  cd clear
+ 1848  ls
+ 1849  clear
+ 1850  ls
+ 1851  python src/load_data/load_data.py --config=params.yaml
+ 1852  pip install yaml
+ 1853  pip3 install yaml
+ 1854  conda install yaml
+ 1855  clear
+ 1856  ls
+ 1857  python src/load_data/load_data.py --config=params.yaml
+ 1858  python3 src/load_data/load_data.py --config=params.yaml
+ 1859  python3
+ 1860  conda install yaml
+ 1861  pip3 install yaml
+ 1862  pip3 freeze
+ 1863  ls
+ 1864  pip3 install yaml
+ 1865  pip search yaml
+ 1866  pip3 search yaml
+ 1867  pip3 install pyyaml
+ 1868  clear
+ 1869  ls
+ 1870  python src/load_data/load_data.py --config=params.yaml
+ 1871  pip3 install pandas
+ 1872  python src/load_data/load_data.py --config=params.yaml
+ 1873  ls
+ 1874  cp ../demo_mlops/params.yaml .
+ 1875  clear
+ 1876  ls
+ 1877  python src/load_data/load_data.py --config=params.yaml
+ 1878  clear
+ 1879  ls
+ 1880  pwd
+ 1881  ls
+ 1882  vi params.yaml 
+ 1883  pwd
+ 1884  vi params.yaml 
+ 1885  python src/load_data/load_data.py --config=params.yaml
+ 1886  ls
+ 1887  cd data
+ 1888  ls
+ 1889  ls -al
+ 1890  cd processed/
+ 1891  ls
+ 1892  cd ../
+ 1893  ls
+ 1894  cd raw/
+ 1895  ls
+ 1896  cd ../
+ 1897  ls
+ 1898  cd ../
+ 1899  ls
+ 1900  python src/load_data/load_data.py --config=params.yaml
+ 1901  vi src/load_data/load_data.py
+ 1902  rm -rf data/raw/winequality.csv 
+ 1903  python src/load_data/load_data.py --config=params.yaml
+ 1904  ls data/raw/winequality.csv
+ 1905  ls -al data/raw/winequality.csv
+ 1906  clear
+ 1907  ls
+ 1908  cd mlops_demo_kubeflow/
+ 1909  ls
+ 1910  cd demo_mlops/
+ 1911  clear
+ 1912  ls
+ 1913  cd demo_kf/
+ 1914  ls
+ 1915  cd src/
+ 1916  ls
+ 1917  cd load_data/
+ 1918  ls
+ 1919  cp ../load_data .
+ 1920  ls
+ 1921  cp ../load_data.py .
+ 1922  clear
+ 1923  ls
+ 1924  vi load_data.py 
+ 1925  ls
+ 1926  cp ../get_data.py .
+ 1927  vi load_data.py 
+ 1928  ls
+ 1929  cd ../
+ 1930  ls
+ 1931  cd ../
+ 1932  ls
+ 1933  cd src/
+ 1934  ls
+ 1935  vi load_data.py 
+ 1936  ls
+ 1937  cd ../
+ 1938  ls
+ 1939  python src/load_data.py --config=params.yaml
+ 1940  ls
+ 1941  python src/load_data/load_data.py --config=params.yaml
+ 1942  conda create -n demo-kf python=3.8
+ 1943  pwd
+ 1944  cd /tmp
+ 1945  curl -O https://repo.anaconda.com/archive/Anaconda3-2021.05-Linux-x86_64.sh
+ 1946  bash Anaconda3-2019.03-Linux-x86_64.sh
+ 1947  ls
+ 1948  bash Anaconda3-2019.03-Linux-x86_64.sh
+ 1949  chmod +x Anaconda3-2021.05-Linux-x86_64.sh 
+ 1950  bash Anaconda3-2019.03-Linux-x86_64.sh
+ 1951  ls
+ 1952  sh Anaconda3-2021.05-Linux-x86_64.sh 
+ 1953  ls
+ 1954  vi ~/.bashrc
+ 1955  source ~/.bashrc
+ 1956  conda
+ 1957  conda env list
+ 1958  conda create -n demo-kf python=3.8
+ 1959  conda init bash
+ 1960  $_
+ 1961  cd
+ 1962  ls
+ 1963  cd mlops_demo_kubeflow/
+ 1964  ls
+ 1965  cd demo_mlops/
+ 1966  ls
+ 1967  cd demo_kf/
+ 1968  ls
+ 1969  cd mlops_demo_kubeflow/
+ 1970  clear
+ 1971  ls
+ 1972  cd demo_mlops/
+ 1973  ls
+ 1974  conda env list
+ 1975  cd demo_kf/
+ 1976  clear
+ 1977  ls
+ 1978  cd src/
+ 1979  ls
+ 1980  vi load_data
+ 1981  clear
+ 1982  ls
+ 1983  cd load_data/
+ 1984  clear
+ 1985  ls
+ 1986  cd ../
+ 1987  ls
+ 1988  kubectl port-forward svc/istio-ingressgateway -n istio-system 8080:80 --address='0.0.0.0' 
+ 1989  clear
+ 1990  ls
+ 1991  mkdir kf-deploy
+ 1992  cd kf-deploy/
+ 1993  cp ../kubeflow.zip .
+ 1994  clear
+ 1995  ls
+ 1996  unzip kubeflow.zip 
+ 1997  clear
+ 1998  ls
+ 1999  cd kubeflow/
+ 2000  ls
+ 2001  clear
+ 2002  ls
+ 2003  cd app_deploy/
+ 2004  ls
+ 2005  clear
+ 2006  ls
+ 2007  cd ../
+ 2008  ls
+ 2009  cd
+ 2010  ls
+ 2011  cd kf-deploy/
+ 2012  ls
+ 2013  unzip kubeflow\ .zip 
+ 2014  clear
+ 2015  ls
+ 2016  cd kubeflow/
+ 2017  ls
+ 2018  cd app_deploy/
+ 2019  ls
+ 2020  vi Dockerfile 
+ 2021  cd ../
+ 2022  ls
+ 2023  vi params.yaml 
+ 2024  cd app_deploy/
+ 2025  ls
+ 2026  vi Dockerfile 
+ 2027  sudo docker build -t kf-deploy-wq .
+ 2028  clear
+ 2029  ls
+ 2030  vi Dockerfile 
+ 2031  vi app.py 
+ 2032  cp ../params.yaml .
+ 2033  ls
+ 2034  vi params.yaml 
+ 2035  ls
+ 2036  vi deployment.yaml
+ 2037  pwd
+ 2038  sudo docker images
+ 2039  vi deployment.yaml
+ 2040  clear
+ 2041  ls
+ 2042  vi app.py 
+ 2043  vi deployment.yaml 
+ 2044  ls
+ 2045  vi app.py 
+ 2046  vi Dockerfile 
+ 2047  ls
+ 2048  vi deployment.yaml 
+ 2049  ls
+ 2050  i params.yaml 
+ 2051  vi params.yaml 
+ 2052  ls
+ 2053  vi Dockerfile 
+ 2054  sudo docker build -t kf-deploy-wq .
+ 2055  clear
+ 2056  ls
+ 2057  vi deployment.yaml 
+ 2058  ls
+ 2059  vi deployment.yaml 
+ 2060  kubectl create -f deployment.yaml 
+ 2061  vi deployment.yaml 
+ 2062  kubectl create -f deployment.yaml 
+ 2063  vi deployment.yaml 
+ 2064  kubectl create -f deployment.yaml 
+ 2065  vi deployment.yaml 
+ 2066  kubectl create -f deployment.yaml 
+ 2067  vi deployment.yaml 
+ 2068  kubectl create -f deployment.yaml 
+ 2069  vi deployment.yaml 
+ 2070  kubectl create -f deployment.yaml 
+ 2071  vi deployment.yaml 
+ 2072  kubectl create -f deployment.yaml 
+ 2073  clear
+ 2074  kubectl create deployment hello-node --image=registry.k8s.io/e2e-test-images/agnhost:2.39 -- /agnhost netexec --http-port=8080
+ 2075  kubectl get deployments
+ 2076  ls
+ 2077  i deployment.yaml 
+ 2078  vi deployment.yaml 
+ 2079  kubectl create -f deployment.yaml 
+ 2080  sudo docker images
+ 2081  kubectl create deployment kf-deploy --image=kf-deploy-wq:latest  --http-port=8080
+ 2082  kubectl create deployment kf-deploy --image=kf-deploy-wq:latest  
+ 2083  kubectl get deployments
+ 2084  ls
+ 2085  vi dep.yaml
+ 2086  sudo docker build -t ravishankarvblr/kf-demo:latest .
+ 2087  ls
+ 2088  sudo docker build -t ravishankarvblr/kf-demo:latest .
+ 2089  sudo docker run -it ravishankarvblr/kf-demo:latest bash
+ 2090  ls
+ 2091  history | les
+ 2092  history | less
+ 2093  s
+ 2094  ls
+ 2095  vi dep.yaml 
+ 2096  kubectl create -f dep.yaml 
+ 2097  kubectl replace -f dep.yaml 
+ 2098  kubectl get pods
+ 2099  kubectl delete deploy "wqf-deployment"
+ 2100  kubectl create -f dep.yaml 
+ 2101  kubectl get pods
+ 2102  history | less
+ 2103  kubectl get pods
+ 2104  kubectl describe pods wqf-deployment-65f7f6854c-bhvmm
+ 2105  kubectl get logs -f //9c9205fd501118428b76de27da0fc418a206538a2b5509c58fddfd5d24c0b445
+ 2106  kubectl get logs -f 9c9205fd501118428b76de27da0fc418a206538a2b5509c58fddfd5d24c0b445
+ 2107  sudo docker ps
+ 2108  sudo docker run -itd -p 8000:8000 "ravishankarvblr/kf-demo:latest" 
+ 2109  sudo docker logs -f 5d33
+ 2110  sudo docker ps
+ 2111  sudo docker run -itd -p 8001:8000 "ravishankarvblr/kf-demo:latest" 
+ 2112  sudo docker logs -f 9f92
+ 2113  ls
+ 2114  vi Dockerfile 
+ 2115  ls
+ 2116  vi Dockerfile 
+ 2117  sudo docker build -t ravishankarvblr/kf-demo:latest .
+ 2118  sudo docker run -itd -p 8001:8000 "ravishankarvblr/kf-demo:latest" 
+ 2119  sudo docker ps
+ 2120  sudo docker logs -f 39c39498d134
+ 2121  ls
+ 2122  curl localhost:8000
+ 2123  sudo docker ps
+ 2124  curl localhost:8001
+ 2125  ls
+ 2126  vi Dockerfile 
+ 2127  kubectl get pods
+ 2128  kubetl describe pods wqf-deployment-65f7f6854c-6lqq7
+ 2129  kubectl describe pods wqf-deployment-65f7f6854c-6lqq7
+ 2130  kubectl get logs -f 63e30c2aa8609b297ce3dbd948260a3f5905b5128421783a2e3646c66aedf982
+ 2131  kubectl get logs -f containerd://63e30c2aa8609b297ce3dbd948260a3f5905b5128421783a2e3646c66aedf982
+ 2132  sudo docker logs -f containerd://63e30c2aa8609b297ce3dbd948260a3f5905b5128421783a2e3646c66aedf982
+ 2133  kubectl get logs -p wqf-deployment-65f7f6854c-6lqq7
+ 2134  kubetl describe pods wqf-deployment-65f7f6854c-6lqq7
+ 2135  kubectl get pods wqf-deployment-65f7f6854c-6lqq7
+ 2136  kubectl get logs -f wqf-deployment-65f7f6854c-6lqq7
+ 2137  kubectl get logs -p wqf-deployment-65f7f6854c-6lqq7
+ 2138  kubectl get logs -f  wqf-deployment-65f7f6854c-6lqq7
+ 2139  kubectl logs -f wqf-deployment-65f7f6854c-6lqq7
+ 2140  ls
+ 2141  vi dep.yaml 
+ 2142  ls
+ 2143  vi sv.yaml 
+ 2144  kubectl get svc
+ 2145  kubectl svc delete wqf-deployment
+ 2146  kubectl  delete svc wqf-deployment
+ 2147  kubectl create -f sv.yaml 
+ 2148  kubectl get svc
+ 2149  curl https://20.85.75.103
+ 2150  curl https://20.85.75.103:8000
+ 2151  curl http://20.85.75.103:8000
+ 2152  kubectl get svc
+ 2153  curl 20.85.75.103:8000
+ 2154  kubetl edit svc hello-world-service
+ 2155  kubectl edit sv hello-world-service
+ 2156  kubectl edit svc hello-world-service
+ 2157  kubectl edit sv hello-world-service
+ 2158  kubectl edit svc hello-world-service
+ 2159  kubectl edit svc kubernetes
+ 2160  kubectl get svc
+ 2161  clear
+ 2162  kubectl describe service
+ 2163  kubectl describe service wqf-deployment
+ 2164  az network public-ip show --resource-group aiap
+ 2165  az network public-ip show --resource-group aiap -name wqf-deployment
+ 2166  az network public-ip show --resource-group aiap 
+ 2167  clear
+ 2168  kubectl get pods
+ 2169  clear
+ 2170  kubectl get pods
+ 2171  kubectl run -it --rm aks-ssh --image=debian:stable
+ 2172  ls
+ 2173  cp dep.yaml deployment.yaml 
+ 2174  ls
+ 2175  vi deployment.yaml 
+ 2176  ls
+ 2177  kubectl get pods
+ 2178  kubectl exec -it wqf-deployment-65f7f6854c-tlwrt bash
+ 2179  ls
+ 2180  vi deployment.yaml 
+ 2181  kubectl create -f deployment.yaml 
+ 2182  vi dep.yaml 
+ 2183  vi deployment.yaml 
+ 2184  kubectl create -f deployment.yaml 
+ 2185  kubectl get pods
+ 2186  kubectl create -f deployment.yaml 
+ 2187  kubectl get pods
+ 2188  kubetl delete deploy wqf-deployment-vol
+ 2189  kubectl delete deploy wqf-deployment-vol
+ 2190  vi deployment.yaml 
+ 2191  kubectl delete deploy wqf-deployment-vol
+ 2192  kubectl create -f deployment.yaml 
+ 2193  kubectl get pods
+ 2194  kubectl get pods -n kubeflow-user-example-com
+ 2195  clear
+ 2196  kubectl get pods -n kubeflow-user-example-com
+ 2197  kubectl describe pod wqf-deployment-vol-695dd8bcd7-4lbsl
+ 2198  kubectl describe pod wqf-deployment-vol
+ 2199  kubectl describe pod wqf-deployment-vol-695dd8bcd7-5vd7z
+ 2200  kubectl get pods -n kubeflow-user-example-com
+ 2201  kubectl delete deloy wqf-deployment-vol
+ 2202  kubectl delete deloyment wqf-deployment-vol
+ 2203  kubectl delete deployment wqf-deployment-vol
+ 2204  kubectl delete deployment wqf-deployment-vol -n kubeflow-user-example-com
+ 2205  ls
+ 2206  vi deployment.yaml 
+ 2207  kubectl create deployment.yaml 
+ 2208  kubectl create -f deployment.yaml 
+ 2209  kubectl get pods -n kubeflow-user-example-com
+ 2210  kubectl describe pod wqf-deployment-vol-695dd8bcd7-879gw
+ 2211  vi deployment.yaml 
+ 2212  kubectl create -f deployment.yaml 
+ 2213  kubectl delete deployment wqf-deployment-vol -n kubeflow-user-example-com
+ 2214  kubectl create -f deployment.yaml 
+ 2215  kubectl get ds
+ 2216  kubectl get pods
+ 2217* 
+ 2218  kubectl exec -it wqf-deployment-vol-5d8778995f-kmd5x bash
+ 2219  kubectl get pods -n kubeflow-user-example-com
+ 2220  history | less
+ 2221  kubectl get pods -n kubeflow-user-example-com
+ 2222  kubectl delete deployment wqf-deployment-vol -n kubeflow-user-example-com
+ 2223  kubectl get pods -n kubeflow-user-example-com
+ 2224  kubectl delete pods wqf-deployment-vol-5d8778995f-xm5zq
+ 2225  kubectl delete pods wqf-deployment-vol-5d8778995f-xm5zq -n kubeflow-user-example-com
+ 2226  kubectl get pods -n kubeflow-user-example-com
+ 2227  kubectl create -f deployment.yaml 
+ 2228  kubectl get pods -n kubeflow-user-example-com
+ 2229  kubectl delete pods wqf-deployment-vol-5d8778995f-kc7lx -n kubeflow-user-example-com
+ 2230  clear
+ 2231  kubectl delete pods wqf-deployment-vol-5d8778995f-kc7lx -n kubeflow-user-example-com
+ 2232  kubectl get pods -n kubeflow-user-example-com
+ 2233  ls
+ 2234  cp sv.yaml service.yaml
+ 2235  vi deployment.yaml 
+ 2236  kubectl exec -it wqf-deployment-vol-5d8778995f-4rskx bash
+ 2237  kubectl exec -n kubeflow-user-example-com -it wqf-deployment-vol-5d8778995f-4rskx bash
+ 2238  ls
+ 2239  vi params.yaml 
+ 2240  ls
+ 2241  vi params.yaml 
+ 2242  sudo docker build -t ravishankarvblr/kf-demo:v0.1 .
+ 2243  sudo docker push ravishankarvblr/kf-demo:v0.1
+ 2244  ls
+ 2245  vi deployment.yaml 
+ 2246  kubectl get pods -n kubeflow-user-example-com
+ 2247  kubetl delete deployment wqf-deployment-vol -n kubeflow-user-example-com
+ 2248  kubectl delete deployment wqf-deployment-vol -n kubeflow-user-example-com
+ 2249  kubectl get pods -n kubeflow-user-example-com
+ 2250  ls
+ 2251  vi deployment.yaml 
+ 2252  vi params.yaml 
+ 2253  kubectl create -f deployment.yaml 
+ 2254  kubectl get pods -n kubeflow-user-example-com
+ 2255  ls
+ 2256  vi service.yaml 
+ 2257  vi deployment.yaml 
+ 2258  vi service.yaml 
+ 2259  kubectl create -f service.yaml 
+ 2260  kubectl get svc -n kubeflow-user-example-com
+ 2261  curl 20.122.251.57:8000
+ 2262  kubectl run -it --rm aks-ssh --image=debian:stable
+ 2263  le
+ 2264  ls
+ 2265  kubectl delete deployment wqf-deployment-vol -n kubeflow-user-example-com
+ 2266  kubectl get pods -n kubeflow-user-example-com
+ 2267  ls
+ 2268  vi deployment.yaml 
+ 2269  ls
+ 2270  vi service.yaml 
+ 2271  kubectl create -f deployment.yaml 
+ 2272  kubectl create -f service.yaml 
+ 2273  kubectl get pods
+ 2274  kubectl delete deployment wqf-deployment-vol
+ 2275  kubectl get pods
+ 2276  clear
+ 2277  ls
+ 2278  vi deployment.yaml 
+ 2279  ls
+ 2280  vi service.yaml 
+ 2281  kubectl create -f service.yaml 
+ 2282  clear
+ 2283  ls
+ 2284  vi deployment.yaml 
+ 2285  history | less
+ 2286  kubectl create -f deployment.yaml
+ 2287  kubectl get pods -n kubeflow-user-example-com
+ 2288  kubectl delete deployment wqf-deployment-vol
+ 2289  kubectl delete deployment wqf-deployment-vol -n kubeflow-user-example-com
+ 2290  ls
+ 2291  vi deployment.yaml 
+ 2292  kubectl create -f deployment.yaml
+ 2293  kubectl get pods -n kubeflow-user-example-com
+ 2294  kubectl delete deployment wqf-deployment-vol -n kubeflow-user-example-com
+ 2295  ls
+ 2296  vi deployment.yaml 
+ 2297  kubectl delete deployment wqf-deployment-vol -n kubeflow-user-example-com
+ 2298  kubectl create -f deployment.yaml
+ 2299  kubectl get pods -n kubeflow-user-example-com
+ 2300  ls
+ 2301  vi service.yaml 
+ 2302  kubectl create -f service.yaml 
+ 2303  kubectl get svc -n kubeflow-user-example-com
+ 2304  history | less
+ 2305  ls
+ 2306  history > cmds.txt
+ 2307  ls
+ 2308  vi cmds.txt 
+ 2309  history > cmds.txt

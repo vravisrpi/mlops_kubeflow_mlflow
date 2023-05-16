@@ -1,0 +1,15 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: wqf-vol-deployment
+  service:  kubeflow-user-example-com
+spec:
+  type: LoadBalancer
+  ports:
+  - name: wqf-vol-deployment
+    protocol: TCP
+    port: 8000
+
+  selector:
+    app: wqf-vol
+                        

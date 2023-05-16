@@ -1,0 +1,345 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: winequality-kubeflow-demo-pipeline-
+  annotations: {pipelines.kubeflow.org/kfp_sdk_version: 1.6.3, pipelines.kubeflow.org/pipeline_compilation_time: '2023-05-15T07:11:22.479272',
+    pipelines.kubeflow.org/pipeline_spec: '{"description": "A sample pipeline that
+      performs Winequality task", "inputs": [{"name": "data_path", "type": "String"}],
+      "name": "Winequality Kubeflow Demo Pipeline"}'}
+  labels: {pipelines.kubeflow.org/kfp_sdk_version: 1.6.3}
+spec:
+  entrypoint: winequality-kubeflow-demo-pipeline
+  templates:
+  - name: prepare-data
+    container:
+      args: []
+      command:
+      - sh
+      - -c
+      - (PIP_DISABLE_PIP_VERSION_CHECK=1 python3 -m pip install --quiet --no-warn-script-location
+        'pandas==1.2.4' || PIP_DISABLE_PIP_VERSION_CHECK=1 python3 -m pip install
+        --quiet --no-warn-script-location 'pandas==1.2.4' --user) && "$0" "$@"
+      - sh
+      - -ec
+      - |
+        program_path=$(mktemp)
+        printf "%s" "$0" > "$program_path"
+        python3 -u "$program_path" "$@"
+      - |
+        def prepare_data():
+            import pandas as pd
+            print("---- Inside prepare_data component ----")
+            # Load dataset
+            df = pd.read_csv("https://aiapstorage.blob.core.windows.net/kfdemo/winequality.csv?sp=r&st=2023-05-15T05:55:30Z&se=2023-06-05T13:55:30Z&spr=https&sv=2022-11-02&sr=b&sig=ST5veeeeir8vcLs8Rj0AucrNrsSmUyMEbxPwHZ3%2FL3g%3D")
+            df = df.dropna()
+            df.to_csv(f'data/final_df.csv', index=False)
+            print("\n ---- data csv is saved to PV location /data/final_df.csv ----")
+
+        import argparse
+        _parser = argparse.ArgumentParser(prog='Prepare data', description='')
+        _parsed_args = vars(_parser.parse_args())
+
+        _outputs = prepare_data(**_parsed_args)
+      image: python:3.7
+      volumeMounts:
+      - {mountPath: '{{inputs.parameters.data_path}}', name: wq-vol}
+    inputs:
+      parameters:
+      - {name: data_path}
+      - {name: wq-vol-name}
+    metadata:
+      labels: {pipelines.kubeflow.org/kfp_sdk_version: 1.6.3, pipelines.kubeflow.org/pipeline-sdk-type: kfp}
+      annotations: {pipelines.kubeflow.org/component_spec: '{"implementation": {"container":
+          {"args": [], "command": ["sh", "-c", "(PIP_DISABLE_PIP_VERSION_CHECK=1 python3
+          -m pip install --quiet --no-warn-script-location ''pandas==1.2.4'' || PIP_DISABLE_PIP_VERSION_CHECK=1
+          python3 -m pip install --quiet --no-warn-script-location ''pandas==1.2.4''
+          --user) && \"$0\" \"$@\"", "sh", "-ec", "program_path=$(mktemp)\nprintf
+          \"%s\" \"$0\" > \"$program_path\"\npython3 -u \"$program_path\" \"$@\"\n",
+          "def prepare_data():\n    import pandas as pd\n    print(\"---- Inside prepare_data
+          component ----\")\n    # Load dataset\n    df = pd.read_csv(\"https://aiapstorage.blob.core.windows.net/kfdemo/winequality.csv?sp=r&st=2023-05-15T05:55:30Z&se=2023-06-05T13:55:30Z&spr=https&sv=2022-11-02&sr=b&sig=ST5veeeeir8vcLs8Rj0AucrNrsSmUyMEbxPwHZ3%2FL3g%3D\")\n    df
+          = df.dropna()\n    df.to_csv(f''data/final_df.csv'', index=False)\n    print(\"\\n
+          ---- data csv is saved to PV location /data/final_df.csv ----\")\n\nimport
+          argparse\n_parser = argparse.ArgumentParser(prog=''Prepare data'', description='''')\n_parsed_args
+          = vars(_parser.parse_args())\n\n_outputs = prepare_data(**_parsed_args)\n"],
+          "image": "python:3.7"}}, "name": "Prepare data"}', pipelines.kubeflow.org/component_ref: '{}',
+        pipelines.kubeflow.org/max_cache_staleness: P0D}
+    volumes:
+    - name: wq-vol
+      persistentVolumeClaim: {claimName: '{{inputs.parameters.wq-vol-name}}'}
+  - name: split-and-save-data
+    container:
+      args: []
+      command:
+      - sh
+      - -c
+      - (PIP_DISABLE_PIP_VERSION_CHECK=1 python3 -m pip install --quiet --no-warn-script-location
+        'pandas==1.2.4' 'scikit-learn' || PIP_DISABLE_PIP_VERSION_CHECK=1 python3
+        -m pip install --quiet --no-warn-script-location 'pandas==1.2.4' 'scikit-learn'
+        --user) && "$0" "$@"
+      - sh
+      - -ec
+      - |
+        program_path=$(mktemp)
+        printf "%s" "$0" > "$program_path"
+        python3 -u "$program_path" "$@"
+      - "def split_and_save_data(config_path=f'data/final_df.csv',split_ratio=0.3,random_state=100,\n\
+        \                        train_data_path=f\"data/processed/train_winequality.csv\"\
+        ,test_data_path=f\"data/processed/test_winequality.csv\"):\n    import pandas\
+        \ as pd \n    from sklearn.model_selection import train_test_split\n    import\
+        \ os\n    df = pd.read_csv(config_path, sep=\",\")\n    train, test =train_test_split(\n\
+        \        df,\n        test_size=split_ratio,\n        random_state=random_state\n\
+        \    )\n    os.makedirs(\"data/processed/\", exist_ok=True)\n    train.to_csv(train_data_path,\
+        \ index=False, encoding= \"utf-8\", sep= \",\")\n    test.to_csv(test_data_path,\
+        \ index=False, encoding= \"utf-8\", sep= \",\")\n\nimport argparse\n_parser\
+        \ = argparse.ArgumentParser(prog='Split and save data', description='')\n\
+        _parser.add_argument(\"--config-path\", dest=\"config_path\", type=str, required=False,\
+        \ default=argparse.SUPPRESS)\n_parser.add_argument(\"--split-ratio\", dest=\"\
+        split_ratio\", type=str, required=False, default=argparse.SUPPRESS)\n_parser.add_argument(\"\
+        --random-state\", dest=\"random_state\", type=str, required=False, default=argparse.SUPPRESS)\n\
+        _parser.add_argument(\"--train-data-path\", dest=\"train_data_path\", type=str,\
+        \ required=False, default=argparse.SUPPRESS)\n_parser.add_argument(\"--test-data-path\"\
+        , dest=\"test_data_path\", type=str, required=False, default=argparse.SUPPRESS)\n\
+        _parsed_args = vars(_parser.parse_args())\n\n_outputs = split_and_save_data(**_parsed_args)\n"
+      image: python:3.7
+      volumeMounts:
+      - {mountPath: '{{inputs.parameters.data_path}}', name: wq-vol}
+    inputs:
+      parameters:
+      - {name: data_path}
+      - {name: wq-vol-name}
+    metadata:
+      labels: {pipelines.kubeflow.org/kfp_sdk_version: 1.6.3, pipelines.kubeflow.org/pipeline-sdk-type: kfp}
+      annotations: {pipelines.kubeflow.org/component_spec: '{"implementation": {"container":
+          {"args": [{"if": {"cond": {"isPresent": "config_path"}, "then": ["--config-path",
+          {"inputValue": "config_path"}]}}, {"if": {"cond": {"isPresent": "split_ratio"},
+          "then": ["--split-ratio", {"inputValue": "split_ratio"}]}}, {"if": {"cond":
+          {"isPresent": "random_state"}, "then": ["--random-state", {"inputValue":
+          "random_state"}]}}, {"if": {"cond": {"isPresent": "train_data_path"}, "then":
+          ["--train-data-path", {"inputValue": "train_data_path"}]}}, {"if": {"cond":
+          {"isPresent": "test_data_path"}, "then": ["--test-data-path", {"inputValue":
+          "test_data_path"}]}}], "command": ["sh", "-c", "(PIP_DISABLE_PIP_VERSION_CHECK=1
+          python3 -m pip install --quiet --no-warn-script-location ''pandas==1.2.4''
+          ''scikit-learn'' || PIP_DISABLE_PIP_VERSION_CHECK=1 python3 -m pip install
+          --quiet --no-warn-script-location ''pandas==1.2.4'' ''scikit-learn'' --user)
+          && \"$0\" \"$@\"", "sh", "-ec", "program_path=$(mktemp)\nprintf \"%s\" \"$0\"
+          > \"$program_path\"\npython3 -u \"$program_path\" \"$@\"\n", "def split_and_save_data(config_path=f''data/final_df.csv'',split_ratio=0.3,random_state=100,\n                        train_data_path=f\"data/processed/train_winequality.csv\",test_data_path=f\"data/processed/test_winequality.csv\"):\n    import
+          pandas as pd \n    from sklearn.model_selection import train_test_split\n    import
+          os\n    df = pd.read_csv(config_path, sep=\",\")\n    train, test =train_test_split(\n        df,\n        test_size=split_ratio,\n        random_state=random_state\n    )\n    os.makedirs(\"data/processed/\",
+          exist_ok=True)\n    train.to_csv(train_data_path, index=False, encoding=
+          \"utf-8\", sep= \",\")\n    test.to_csv(test_data_path, index=False, encoding=
+          \"utf-8\", sep= \",\")\n\nimport argparse\n_parser = argparse.ArgumentParser(prog=''Split
+          and save data'', description='''')\n_parser.add_argument(\"--config-path\",
+          dest=\"config_path\", type=str, required=False, default=argparse.SUPPRESS)\n_parser.add_argument(\"--split-ratio\",
+          dest=\"split_ratio\", type=str, required=False, default=argparse.SUPPRESS)\n_parser.add_argument(\"--random-state\",
+          dest=\"random_state\", type=str, required=False, default=argparse.SUPPRESS)\n_parser.add_argument(\"--train-data-path\",
+          dest=\"train_data_path\", type=str, required=False, default=argparse.SUPPRESS)\n_parser.add_argument(\"--test-data-path\",
+          dest=\"test_data_path\", type=str, required=False, default=argparse.SUPPRESS)\n_parsed_args
+          = vars(_parser.parse_args())\n\n_outputs = split_and_save_data(**_parsed_args)\n"],
+          "image": "python:3.7"}}, "inputs": [{"default": "data/final_df.csv", "name":
+          "config_path", "optional": true}, {"default": "0.3", "name": "split_ratio",
+          "optional": true}, {"default": "100", "name": "random_state", "optional":
+          true}, {"default": "data/processed/train_winequality.csv", "name": "train_data_path",
+          "optional": true}, {"default": "data/processed/test_winequality.csv", "name":
+          "test_data_path", "optional": true}], "name": "Split and save data"}', pipelines.kubeflow.org/component_ref: '{}',
+        pipelines.kubeflow.org/max_cache_staleness: P0D}
+    volumes:
+    - name: wq-vol
+      persistentVolumeClaim: {claimName: '{{inputs.parameters.wq-vol-name}}'}
+  - name: train-and-evaluate
+    container:
+      args: []
+      command:
+      - sh
+      - -c
+      - (PIP_DISABLE_PIP_VERSION_CHECK=1 python3 -m pip install --quiet --no-warn-script-location
+        'pandas==1.2.4' 'scikit-learn' 'numpy==1.21.0' || PIP_DISABLE_PIP_VERSION_CHECK=1
+        python3 -m pip install --quiet --no-warn-script-location 'pandas==1.2.4' 'scikit-learn'
+        'numpy==1.21.0' --user) && "$0" "$@"
+      - sh
+      - -ec
+      - |
+        program_path=$(mktemp)
+        printf "%s" "$0" > "$program_path"
+        python3 -u "$program_path" "$@"
+      - "def train_and_evaluate(config_path=f'data/final_df.csv',train_data_path=f\"\
+        data/processed/train_winequality.csv\",\n                       test_data_path=f\"\
+        data/processed/test_winequality.csv\",\n                       random_state=100,\n\
+        \                       model_dir=\"data/saved_models\",\n               \
+        \        alpha=0.96,\n                       l1_ratio=0.48,\n            \
+        \           target=\"quality\",\n                       scores_file= \"data/reports/scores.json\"\
+        ,\n                       params_file= \"data/reports/params.json\"\n    \
+        \                  ):\n    import pandas as pd\n    from sklearn.linear_model\
+        \ import ElasticNet\n    import numpy as np\n    import os\n    import json\n\
+        \    import joblib\n\n    def eval_metrics(actual, pred):\n        import\
+        \ numpy as np\n        from sklearn.metrics import mean_squared_error, mean_absolute_error,\
+        \ r2_score\n        rmse = np.sqrt(mean_squared_error(actual, pred))\n   \
+        \     mae = mean_absolute_error(actual, pred)\n        r2 = r2_score(actual,\
+        \ pred)\n        return rmse, mae, r2\n\n    train = pd.read_csv(train_data_path,\
+        \ sep=\",\")\n    test = pd.read_csv(test_data_path, sep=\",\")\n\n    train_y\
+        \ = train[target]\n    test_y = test[target]\n\n    train_x = train.drop(target,\
+        \ axis=1)\n    test_x = test.drop(target, axis=1)\n\n    lr = ElasticNet(\n\
+        \        alpha=alpha, \n        l1_ratio=l1_ratio, \n        random_state=random_state)\n\
+        \    lr.fit(train_x, train_y)\n\n    predicted_qualities = lr.predict(test_x)\n\
+        \n    (rmse, mae, r2) = eval_metrics(test_y, predicted_qualities)\n\n    print(\"\
+        Elasticnet model (alpha=%f, l1_ratio=%f):\" % (alpha, l1_ratio))\n    print(\"\
+        \  RMSE: %s\" % rmse)\n    print(\"  MAE: %s\" % mae)\n    print(\"  R2: %s\"\
+        \ % r2)\n\n#######################To Track the Params and Scores Locally ##############################\n\
+        \    os.makedirs(\"data/reports\", exist_ok=True)\n    with open(scores_file,\
+        \ \"w\") as f:\n        scores = {\n            \"rmse\": rmse,\n        \
+        \    \"mae\": mae,\n            \"r2\": r2\n        }\n        json.dump(scores,\
+        \ f, indent=4)\n\n    with open(params_file, \"w\") as f:\n        params\
+        \ = {\n            \"alpha\": alpha,\n            \"l1_ratio\": l1_ratio,\n\
+        \        }\n        json.dump(params, f, indent=4)\n#####################################################\n\
+        \n    os.makedirs(model_dir, exist_ok=True)\n    model_path = os.path.join(model_dir,\
+        \ \"model.joblib\")\n\n    joblib.dump(lr, model_path)\n\nimport argparse\n\
+        _parser = argparse.ArgumentParser(prog='Train and evaluate', description='')\n\
+        _parser.add_argument(\"--config-path\", dest=\"config_path\", type=str, required=False,\
+        \ default=argparse.SUPPRESS)\n_parser.add_argument(\"--train-data-path\",\
+        \ dest=\"train_data_path\", type=str, required=False, default=argparse.SUPPRESS)\n\
+        _parser.add_argument(\"--test-data-path\", dest=\"test_data_path\", type=str,\
+        \ required=False, default=argparse.SUPPRESS)\n_parser.add_argument(\"--random-state\"\
+        , dest=\"random_state\", type=str, required=False, default=argparse.SUPPRESS)\n\
+        _parser.add_argument(\"--model-dir\", dest=\"model_dir\", type=str, required=False,\
+        \ default=argparse.SUPPRESS)\n_parser.add_argument(\"--alpha\", dest=\"alpha\"\
+        , type=str, required=False, default=argparse.SUPPRESS)\n_parser.add_argument(\"\
+        --l1-ratio\", dest=\"l1_ratio\", type=str, required=False, default=argparse.SUPPRESS)\n\
+        _parser.add_argument(\"--target\", dest=\"target\", type=str, required=False,\
+        \ default=argparse.SUPPRESS)\n_parser.add_argument(\"--scores-file\", dest=\"\
+        scores_file\", type=str, required=False, default=argparse.SUPPRESS)\n_parser.add_argument(\"\
+        --params-file\", dest=\"params_file\", type=str, required=False, default=argparse.SUPPRESS)\n\
+        _parsed_args = vars(_parser.parse_args())\n\n_outputs = train_and_evaluate(**_parsed_args)\n"
+      image: python:3.7
+      volumeMounts:
+      - {mountPath: '{{inputs.parameters.data_path}}', name: wq-vol}
+    inputs:
+      parameters:
+      - {name: data_path}
+      - {name: wq-vol-name}
+    metadata:
+      labels: {pipelines.kubeflow.org/kfp_sdk_version: 1.6.3, pipelines.kubeflow.org/pipeline-sdk-type: kfp}
+      annotations: {pipelines.kubeflow.org/component_spec: '{"implementation": {"container":
+          {"args": [{"if": {"cond": {"isPresent": "config_path"}, "then": ["--config-path",
+          {"inputValue": "config_path"}]}}, {"if": {"cond": {"isPresent": "train_data_path"},
+          "then": ["--train-data-path", {"inputValue": "train_data_path"}]}}, {"if":
+          {"cond": {"isPresent": "test_data_path"}, "then": ["--test-data-path", {"inputValue":
+          "test_data_path"}]}}, {"if": {"cond": {"isPresent": "random_state"}, "then":
+          ["--random-state", {"inputValue": "random_state"}]}}, {"if": {"cond": {"isPresent":
+          "model_dir"}, "then": ["--model-dir", {"inputValue": "model_dir"}]}}, {"if":
+          {"cond": {"isPresent": "alpha"}, "then": ["--alpha", {"inputValue": "alpha"}]}},
+          {"if": {"cond": {"isPresent": "l1_ratio"}, "then": ["--l1-ratio", {"inputValue":
+          "l1_ratio"}]}}, {"if": {"cond": {"isPresent": "target"}, "then": ["--target",
+          {"inputValue": "target"}]}}, {"if": {"cond": {"isPresent": "scores_file"},
+          "then": ["--scores-file", {"inputValue": "scores_file"}]}}, {"if": {"cond":
+          {"isPresent": "params_file"}, "then": ["--params-file", {"inputValue": "params_file"}]}}],
+          "command": ["sh", "-c", "(PIP_DISABLE_PIP_VERSION_CHECK=1 python3 -m pip
+          install --quiet --no-warn-script-location ''pandas==1.2.4'' ''scikit-learn''
+          ''numpy==1.21.0'' || PIP_DISABLE_PIP_VERSION_CHECK=1 python3 -m pip install
+          --quiet --no-warn-script-location ''pandas==1.2.4'' ''scikit-learn'' ''numpy==1.21.0''
+          --user) && \"$0\" \"$@\"", "sh", "-ec", "program_path=$(mktemp)\nprintf
+          \"%s\" \"$0\" > \"$program_path\"\npython3 -u \"$program_path\" \"$@\"\n",
+          "def train_and_evaluate(config_path=f''data/final_df.csv'',train_data_path=f\"data/processed/train_winequality.csv\",\n                       test_data_path=f\"data/processed/test_winequality.csv\",\n                       random_state=100,\n                       model_dir=\"data/saved_models\",\n                       alpha=0.96,\n                       l1_ratio=0.48,\n                       target=\"quality\",\n                       scores_file=
+          \"data/reports/scores.json\",\n                       params_file= \"data/reports/params.json\"\n                      ):\n    import
+          pandas as pd\n    from sklearn.linear_model import ElasticNet\n    import
+          numpy as np\n    import os\n    import json\n    import joblib\n\n    def
+          eval_metrics(actual, pred):\n        import numpy as np\n        from sklearn.metrics
+          import mean_squared_error, mean_absolute_error, r2_score\n        rmse =
+          np.sqrt(mean_squared_error(actual, pred))\n        mae = mean_absolute_error(actual,
+          pred)\n        r2 = r2_score(actual, pred)\n        return rmse, mae, r2\n\n    train
+          = pd.read_csv(train_data_path, sep=\",\")\n    test = pd.read_csv(test_data_path,
+          sep=\",\")\n\n    train_y = train[target]\n    test_y = test[target]\n\n    train_x
+          = train.drop(target, axis=1)\n    test_x = test.drop(target, axis=1)\n\n    lr
+          = ElasticNet(\n        alpha=alpha, \n        l1_ratio=l1_ratio, \n        random_state=random_state)\n    lr.fit(train_x,
+          train_y)\n\n    predicted_qualities = lr.predict(test_x)\n\n    (rmse, mae,
+          r2) = eval_metrics(test_y, predicted_qualities)\n\n    print(\"Elasticnet
+          model (alpha=%f, l1_ratio=%f):\" % (alpha, l1_ratio))\n    print(\"  RMSE:
+          %s\" % rmse)\n    print(\"  MAE: %s\" % mae)\n    print(\"  R2: %s\" % r2)\n\n#######################To
+          Track the Params and Scores Locally ##############################\n    os.makedirs(\"data/reports\",
+          exist_ok=True)\n    with open(scores_file, \"w\") as f:\n        scores
+          = {\n            \"rmse\": rmse,\n            \"mae\": mae,\n            \"r2\":
+          r2\n        }\n        json.dump(scores, f, indent=4)\n\n    with open(params_file,
+          \"w\") as f:\n        params = {\n            \"alpha\": alpha,\n            \"l1_ratio\":
+          l1_ratio,\n        }\n        json.dump(params, f, indent=4)\n#####################################################\n\n    os.makedirs(model_dir,
+          exist_ok=True)\n    model_path = os.path.join(model_dir, \"model.joblib\")\n\n    joblib.dump(lr,
+          model_path)\n\nimport argparse\n_parser = argparse.ArgumentParser(prog=''Train
+          and evaluate'', description='''')\n_parser.add_argument(\"--config-path\",
+          dest=\"config_path\", type=str, required=False, default=argparse.SUPPRESS)\n_parser.add_argument(\"--train-data-path\",
+          dest=\"train_data_path\", type=str, required=False, default=argparse.SUPPRESS)\n_parser.add_argument(\"--test-data-path\",
+          dest=\"test_data_path\", type=str, required=False, default=argparse.SUPPRESS)\n_parser.add_argument(\"--random-state\",
+          dest=\"random_state\", type=str, required=False, default=argparse.SUPPRESS)\n_parser.add_argument(\"--model-dir\",
+          dest=\"model_dir\", type=str, required=False, default=argparse.SUPPRESS)\n_parser.add_argument(\"--alpha\",
+          dest=\"alpha\", type=str, required=False, default=argparse.SUPPRESS)\n_parser.add_argument(\"--l1-ratio\",
+          dest=\"l1_ratio\", type=str, required=False, default=argparse.SUPPRESS)\n_parser.add_argument(\"--target\",
+          dest=\"target\", type=str, required=False, default=argparse.SUPPRESS)\n_parser.add_argument(\"--scores-file\",
+          dest=\"scores_file\", type=str, required=False, default=argparse.SUPPRESS)\n_parser.add_argument(\"--params-file\",
+          dest=\"params_file\", type=str, required=False, default=argparse.SUPPRESS)\n_parsed_args
+          = vars(_parser.parse_args())\n\n_outputs = train_and_evaluate(**_parsed_args)\n"],
+          "image": "python:3.7"}}, "inputs": [{"default": "data/final_df.csv", "name":
+          "config_path", "optional": true}, {"default": "data/processed/train_winequality.csv",
+          "name": "train_data_path", "optional": true}, {"default": "data/processed/test_winequality.csv",
+          "name": "test_data_path", "optional": true}, {"default": "100", "name":
+          "random_state", "optional": true}, {"default": "data/saved_models", "name":
+          "model_dir", "optional": true}, {"default": "0.96", "name": "alpha", "optional":
+          true}, {"default": "0.48", "name": "l1_ratio", "optional": true}, {"default":
+          "quality", "name": "target", "optional": true}, {"default": "data/reports/scores.json",
+          "name": "scores_file", "optional": true}, {"default": "data/reports/params.json",
+          "name": "params_file", "optional": true}], "name": "Train and evaluate"}',
+        pipelines.kubeflow.org/component_ref: '{}', pipelines.kubeflow.org/max_cache_staleness: P0D}
+    volumes:
+    - name: wq-vol
+      persistentVolumeClaim: {claimName: '{{inputs.parameters.wq-vol-name}}'}
+  - name: winequality-kubeflow-demo-pipeline
+    inputs:
+      parameters:
+      - {name: data_path}
+    dag:
+      tasks:
+      - name: prepare-data
+        template: prepare-data
+        dependencies: [wq-vol]
+        arguments:
+          parameters:
+          - {name: data_path, value: '{{inputs.parameters.data_path}}'}
+          - {name: wq-vol-name, value: '{{tasks.wq-vol.outputs.parameters.wq-vol-name}}'}
+      - name: split-and-save-data
+        template: split-and-save-data
+        dependencies: [prepare-data, wq-vol]
+        arguments:
+          parameters:
+          - {name: data_path, value: '{{inputs.parameters.data_path}}'}
+          - {name: wq-vol-name, value: '{{tasks.wq-vol.outputs.parameters.wq-vol-name}}'}
+      - name: train-and-evaluate
+        template: train-and-evaluate
+        dependencies: [split-and-save-data, wq-vol]
+        arguments:
+          parameters:
+          - {name: data_path, value: '{{inputs.parameters.data_path}}'}
+          - {name: wq-vol-name, value: '{{tasks.wq-vol.outputs.parameters.wq-vol-name}}'}
+      - {name: wq-vol, template: wq-vol}
+  - name: wq-vol
+    resource:
+      action: create
+      manifest: |
+        apiVersion: v1
+        kind: PersistentVolumeClaim
+        metadata:
+          name: '{{workflow.name}}-wq-vol'
+        spec:
+          accessModes:
+          - ReadWriteOnce
+          resources:
+            requests:
+              storage: 1Gi
+    outputs:
+      parameters:
+      - name: wq-vol-manifest
+        valueFrom: {jsonPath: '{}'}
+      - name: wq-vol-name
+        valueFrom: {jsonPath: '{.metadata.name}'}
+      - name: wq-vol-size
+        valueFrom: {jsonPath: '{.status.capacity.storage}'}
+    metadata:
+      labels: {pipelines.kubeflow.org/kfp_sdk_version: 1.6.3, pipelines.kubeflow.org/pipeline-sdk-type: kfp}
+  arguments:
+    parameters:
+    - {name: data_path}
+  serviceAccountName: pipeline-runner

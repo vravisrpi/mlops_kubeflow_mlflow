@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+
+kind: Deployment
+
+metadata:
+
+  name: wqf-deployment-vol
+  namespace: kubeflow-user-example-com
+spec:
+
+  selector:
+
+    matchLabels:
+
+      app: wqf-vol
+
+  #replicas: 1 # tells deployment to run 2 pods matching the template
+
+  template:
+
+    metadata:
+
+      labels:
+
+        app: wqf-vol
+
+    spec:
+
+      containers:
+
+      - name: wqf-vol
+
+        image: ravishankarvblr/kf-demo:v0.1
+
+        ports:
+
+        - containerPort: 8000
+        volumeMounts:
+                # a mount for site-data
+                - name: pvc-3cd28cf3-944f-4f32-bab1-bb10e016785b
+                  mountPath: /opt/
+                # another mount for nginx config
+      volumes:
+          - name: pvc-3cd28cf3-944f-4f32-bab1-bb10e016785b
+            persistentVolumeClaim:
+              claimName: winequality-kubeflow-demo-pipeline-sk685-wq-vol
+############
+
