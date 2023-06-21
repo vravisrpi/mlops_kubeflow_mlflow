@@ -1,0 +1,30 @@
+apiVersion: machinelearning.seldon.io/v1
+kind: SeldonDeployment
+metadata:
+  name: my-model-deployment
+  namespace: kubeflow-user-example-com
+spec:
+  predictors:
+  - graph:
+      name: my-model
+      implementation: SKLEARN_SERVER
+      modelUri: /opt/saved_models/
+    name: my-model-predictor
+    replicas: 1
+    componentSpecs:
+      - spec:
+
+          volumes:
+          - name: pvc-3cd28cf3-944f-4f32-bab1-bb10e016785b
+            persistentVolumeClaim:
+              claimName: winequality-kubeflow-demo-pipeline-sk685-wq-vol
+          containers:
+          - name: sklearn
+            image: seldonio/sklearnserver:1.10.0
+            volumeMounts:
+            - name: pvc-3cd28cf3-944f-4f32-bab1-bb10e016785b
+              mountPath: /opt/saved_models/
+              readOnly: true
+
+
+
